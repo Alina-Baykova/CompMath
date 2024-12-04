@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 #include <type_traits>
 #include <cassert>
 #include <algorithm>
@@ -77,6 +78,8 @@ std::ostream& operator << (std::ostream& os, const ThreeDiagonalMatrix<xType>& m
 template<typename numeratorType, typename denominatorType>
 using DivisType = decltype(std::declval<numeratorType>() / std::declval<denominatorType>());
 
+template<typename Type>
+using DiffType = decltype(std::declval<Type>() - std::declval<Type>());
 
 /** Функция для решения методом  прогонки **/
 
@@ -136,7 +139,9 @@ class CubicSpline {
     std::vector<DerivType> bCoeffs;
     std::vector<Deriv2Type> cCoeffs;
     std::vector<Deriv3Type> dCoeffs;
-
+    
+    Deriv2Type leftSecondDeriv;
+    Deriv2Type rightSecondDeriv;
 
     public:
     CubicSpline(const std::vector<xType>& points, const std::vector<yType>& values, const Deriv2Type& first, const Deriv2Type& second){
